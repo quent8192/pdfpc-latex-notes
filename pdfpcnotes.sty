@@ -32,9 +32,13 @@
 			\immediate\write\pdfpcnotesfile{\#\#\# \theframenumber}%
 		\endgroup
 	\fi
-
-	% write note to file
-	\immediate\write\pdfpcnotesfile{\unexpanded{#1}}%
+    
+    % write note to file only for the first overlay
+    \ifnum\beamer@slideinframe=1%
+        % write note to file
+        \immediate\write\pdfpcnotesfile{\unexpanded{#1}}%
+    \fi
+    
 }
 % close file on \begin{document}
 \AtEndDocument{%
