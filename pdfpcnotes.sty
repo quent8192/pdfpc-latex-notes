@@ -15,7 +15,8 @@
 \endgroup
 
 
-\def\lastframenumber{0}
+\newcounter{lastframenumber}
+\setcounter{lastframenumber}{0}
 
 % define command \pnote{} that works like note but
 % additionally writes notes to file in pdfpc readable format
@@ -24,10 +25,10 @@
 	\note{#1}%
 
 	% if frame changed - write a new header
-	\ifdim\theframenumber pt>\lastframenumber pt
-		\let\lastframenumber\theframenumber
-		\begingroup
-			\let\#\hashchar
+	\ifnum\theframenumber>\thelastframenumber%
+		\setcounter{lastframenumber}{\theframenumber}%
+		\begingroup%
+			\let\#\hashchar%
 			\immediate\write\pdfpcnotesfile{\#\#\# \theframenumber}%
 		\endgroup
 	\fi
